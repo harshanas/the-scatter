@@ -1,16 +1,29 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+body{
+    font-family: 'Roboto', sans-serif !important;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+h5{
+    font-family: 'DM Serif Text', serif !important;
 }
 
-* {
-  box-sizing: border-box;
+.btn-primary{
+    background-color: #f8f9fa !important;
+    border-color:#f8f9fa !important;
+    color:#000 !important;
+}
+
+.btn-primary:hover{
+    background-color: #000 !important;
+    border-color:#000 !important;
+    color:#fff !important;
+}
+
+.navbar-brand{
+    font-size: 1.75rem !important;
+    font-family: 'DM Serif Text', serif !important;
+}
+
+.top-voted-blocks .heading{
+    font-family: 'DM Serif Text', serif; 
+    font-size: 1.5rem;  
 }
