@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import react from 'react'
 
-import styles from "../styles/components/leadstory.module.css";
+import styles from "../styles/components/leadstoryexcerpt.module.css";
 
 import leadStoryImg from "../public/images/news-image-2.png";
 
-export default function LeadStory() {
+export default function LeadStoryExcerpt() {
   return (
     <react.Fragment>
         <div className="row my-1">

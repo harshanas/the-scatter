@@ -1,17 +1,16 @@
 import react from "react";
 
 import Header from "../layouts/Header";
-import LeadStory from '../components/LeadStory';
+import LeadStoryExcerpt from '../components/LeadStoryExcerpt';
 import StoryExcerpt from "../components/StoryExcerpt";
 import StoryExcerptMini from "../components/StoryExcerptMini";
 
-import "../styles/components/leadstory.module.css"
 export default function Home() {
   return (
     <react.Fragment>
       <Header/>
       <div className='container'>
-        <LeadStory/>
+        <LeadStoryExcerpt/>
 
         <div class="row">
             {/* begin::Stories Feed */}
