@@ -3,11 +3,15 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Scatter {
+contract Scatter is AccessControl {
 
     string public name;
     address public owner;
+    
+    bytes32 public constant EDITOR_ROLE = keccak256("EDITOR_ROLE");
+    bytes32 public constant SUBSCRIBER_ROLE = keccak256("SUBSCRIBER_ROLE");
 
     using Counters for Counters.Counter;
     Counters.Counter private _storyIds;
@@ -26,6 +30,7 @@ contract Scatter {
     event StoryUpdated(uint id, string title, string hash, bool published);
 
     constructor(string memory _name) {
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         console.log("Deploying Blog with name:", _name);
         name = _name;
         owner = msg.sender;
@@ -36,6 +41,8 @@ contract Scatter {
     }
 
     function createStory(string memory title, string memory hash) public onlyOwner {
+        require( isAllowed(msg.sender, EDITOR_ROLE), "Caller is not an editor");
+
         _storyIds.increment();
         uint storyId = _storyIds.current();
         
@@ -49,6 +56,7 @@ contract Scatter {
     }
 
     function updateStory(uint storyId, string memory title, string memory hash, bool published) public onlyOwner {
+        require( isAllowed(msg.sender, EDITOR_ROLE), "Caller is not an editor");
         Story storage story =  idToStory[storyId];
         story.title = title;
         story.published = published;
@@ -68,6 +76,10 @@ contract Scatter {
             stories[i] = currentItem;
         }
         return stories;
+    }
+
+    function isAllowed(address callerId, bytes32 role ) private view returns (bool) {
+        return  ( hasRole(role, callerId) || hasRole(DEFAULT_ADMIN_ROLE, callerId) );
     }
 
     modifier onlyOwner() {
