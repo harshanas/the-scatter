@@ -9,7 +9,7 @@ export default function StoryById() {
       <Header/>
       <div className='container'>
         
-        <div class="row">
+        <div className="row">
             {/* begin::Story Body */}
             <div className="col-md-6 offset-md-3 col-12">
               <Story/>

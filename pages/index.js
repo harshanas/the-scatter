@@ -12,7 +12,7 @@ export default function Home() {
       <div className='container'>
         <LeadStoryExcerpt/>
 
-        <div class="row">
+        <div className="row">
             {/* begin::Stories Feed */}
             <div className="col-md-8 col-12">
               <StoryExcerpt />
@@ -21,7 +21,7 @@ export default function Home() {
             {/* end::Stories Feed */}
 
             <div className="col-md-4 mt-2 top-voted-blocks">
-              <span class="heading">Top Voted Blocks</span>
+              <span className="heading">Top Voted Blocks</span>
 
               <StoryExcerptMini/>
             </div>

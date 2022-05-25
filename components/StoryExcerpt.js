@@ -9,14 +9,14 @@ export default function StoryExcerpt() {
   return (
     <react.Fragment>
         <div className={`card ${styles['news-story-excerpt-card']} mt-2`}>
-            <div class="row">
-                <div class="col-md-4">
-                    <Image src={newsImageOne} class="img-fluid rounded-start" />
+            <div className="row">
+                <div className="col-md-4">
+                    <Image src={newsImageOne} className="img-fluid rounded-start" />
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
+                <div className="col-md-8">
+                    <div className="card-body">
                         <h5 className={styles['card-title']}>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
-                        <p class="card-text">
+                        <p className="card-text">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum aliquid quae amet nisi fugit reiciendis deserunt, sit, optio incidunt esse repellat quaerat error dignissimos excepturi, quo pariatur nulla corporis? Numquam!
                         </p>
                         </div>

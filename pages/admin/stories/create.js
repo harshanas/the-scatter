@@ -45,7 +45,7 @@ export default function CreateStory() {
 
           <div className="row">
               <div className="col-md-8 offset-md-2">
-                <div class="d-grid gap-2">
+                <div className="d-grid gap-2">
                   <button className="btn btn-primary" type="button">Publish Story</button>
                 </div>
               </div>
