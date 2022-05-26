@@ -62,6 +62,18 @@ describe("Scatter", function () {
 
         story = await scatter.fetchStory(secondStoryHash);
         expect(story.title).to.equal("My second story");
-    })
+    });
+
+    it("Should fetch all the roles for the connected user", async function(){
+        const Scatter = await ethers.getContractFactory(contractName);
+        const scatter = await Scatter.deploy(blogName);
+        await scatter.deployed();
+
+        const roles = await scatter.getRoles();
+
+        expect(roles).to.contains("DEFAULT_ADMIN_ROLE");
+        expect(roles).to.contains("EDITOR_ROLE");
+        expect(roles).to.contains("SUBSCRIBER_ROLE");
+    });
 
 });

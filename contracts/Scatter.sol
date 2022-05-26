@@ -23,6 +23,13 @@ contract Scatter is AccessControl {
       bool published;
     }
 
+    struct Role{
+        bytes32 role;
+        string roleName;
+    }
+
+    Role[3] public roles;
+
     mapping(uint => Story) private idToStory;
     mapping(string => Story) private hashToStory;
 
@@ -34,13 +41,19 @@ contract Scatter is AccessControl {
         console.log("Deploying Blog with name:", _name);
         name = _name;
         owner = msg.sender;
+        roles[0].role = DEFAULT_ADMIN_ROLE;
+        roles[0].roleName = "DEFAULT_ADMIN_ROLE";
+        roles[1].role = EDITOR_ROLE;
+        roles[1].roleName = "EDITOR_ROLE";
+        roles[2].role = SUBSCRIBER_ROLE;
+        roles[2].roleName = "SUBSCRIBER_ROLE";
     }
 
     function fetchStory(string memory hash) public view returns(Story memory){
       return hashToStory[hash];
     }
 
-    function createStory(string memory title, string memory hash) public onlyOwner {
+    function createStory(string memory title, string memory hash) public {
         require( isAllowed(msg.sender, EDITOR_ROLE), "Caller is not an editor");
 
         _storyIds.increment();
@@ -55,7 +68,7 @@ contract Scatter is AccessControl {
         emit StoryCreated(storyId, title, hash);
     }
 
-    function updateStory(uint storyId, string memory title, string memory hash, bool published) public onlyOwner {
+    function updateStory(uint storyId, string memory title, string memory hash, bool published) public {
         require( isAllowed(msg.sender, EDITOR_ROLE), "Caller is not an editor");
         Story storage story =  idToStory[storyId];
         story.title = title;
@@ -76,6 +89,20 @@ contract Scatter is AccessControl {
             stories[i] = currentItem;
         }
         return stories;
+    }
+
+    function getRoles() public view returns (string[5] memory){
+        string[5] memory eligibleRoles;
+        uint arrIndex = 0;
+
+        for(uint i =0; i < roles.length; i++){
+            if (isAllowed(msg.sender, roles[i].role)){
+                eligibleRoles[arrIndex] = roles[i].roleName;
+                arrIndex++;
+            }
+        }
+
+        return eligibleRoles;
     }
 
     function isAllowed(address callerId, bytes32 role ) private view returns (bool) {
