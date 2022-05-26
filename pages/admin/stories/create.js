@@ -1,11 +1,12 @@
 import react from "react";
 import dynamic from "next/dynamic";
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
 
 import { contractAddress } from '../../../config';
+
 import Scatter from '../../../artifacts/contracts/Scatter.sol/Scatter.json'
 
 const ipfsClient = create('https://ipfs.infura.io:5001/api/v0')
@@ -56,7 +57,6 @@ export default function CreateStory() {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       const contract = new ethers.Contract(contractAddress, Scatter.abi, signer)
-      console.log('contract: ', contract)
       try {
         const val = await contract.createStory(post.title, hash)
         /* optional - wait for transaction to be confirmed before rerouting */

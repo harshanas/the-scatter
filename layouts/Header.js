@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import react from 'react'
 import Link from 'next/link'
+import { useContext } from 'react'
 
-export default function Header({ account, connect }) {
+import { AccountContext } from '../context';
+
+export default function Header({ connect }) {
+  const { account } = useContext(AccountContext);
   
   return (
     <react.Fragment>
@@ -15,6 +19,12 @@ export default function Header({ account, connect }) {
         <div className="container">
           <Link href="/">
             <a className="navbar-brand">Newsblocks</a>
+          </Link>
+
+          <Link href={`admin/stories/create`}>
+              <a>
+                  Create Story
+              </a>
           </Link>
           
           <form className="d-flex">
