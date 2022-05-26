@@ -6,6 +6,10 @@ h3, h4{
     font-family: 'DM Serif Text', serif !important;
 }
 
+a {
+    color:unset !important;
+}
+
 .btn-primary{
     background-color: #f8f9fa !important;
     border-color:#f8f9fa !important;

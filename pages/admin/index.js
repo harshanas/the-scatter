@@ -1,12 +1,10 @@
 import react from "react";
 
-import Header from "../../layouts/Header";
 import StoryExcerpt from "../../components/StoryExcerpt";
 
 export default function Home() {
   return (
     <react.Fragment>
-        <Header/>
 
         <div className="container">
             

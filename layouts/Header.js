@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import react from 'react'
+import Link from 'next/link'
 
-export default function Header() {
+export default function Header({ account, connect }) {
+  
   return (
     <react.Fragment>
       <Head>
@@ -11,18 +13,26 @@ export default function Header() {
     {/* begin::Navbar */}
     <nav className="navbar">
         <div className="container">
-          <span className="navbar-brand">Newsblocks</span>
+          <Link href="/">
+            <a className="navbar-brand">Newsblocks</a>
+          </Link>
+          
           <form className="d-flex">
-            <button type="button" className="btn btn-primary">
-                <i className="fa-solid fa-wallet"></i>
-                Connect Wallet
-            </button>
+            {
+              !account && (
+                <button type="button" className="btn btn-primary" onClick={connect}>
+                  <i className="fa-solid fa-wallet"></i>
+                  Connect Wallet
+                </button>
+              )
+            }
+            {
+              account && <p>{account}</p>
+            }
           </form>
         </div>
     </nav>
     {/* end::Navbar */}
-
-    
       
     </react.Fragment>
   )

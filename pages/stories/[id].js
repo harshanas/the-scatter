@@ -1,12 +1,10 @@
 import react from "react";
 
-import Header from "../../layouts/Header";
 import Story from "../../components/Story";
 
 export default function StoryById() {
   return (
     <react.Fragment>
-      <Header/>
       <div className='container'>
         
         <div className="row">
