@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <react.Fragment>
       <Head>
-        <title>The Scatter</title>
+        <title>The Scatter - The on-chain blog</title>
         <meta name="description" content="The on-chain blog" />
       </Head>
     {/* begin::Navbar */}
