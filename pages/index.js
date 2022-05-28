@@ -26,8 +26,8 @@ export default function Home() {
           <main className="px-1">
             <h1>The Scatter</h1>
             <h5 className='text-muted'>The on-chain Blog</h5>
-            <p className="lead">
-              The Scatter is a blogging platform created inside the Polygon network. You can connect your wallet and publish posts. Happy Writing :) 
+            <p className="lead mb-4">
+              The Scatter is a blogging platform created inside the Polygon network.<br/>You can connect your wallet and publish posts.<br/>Happy Writing :) 
             </p>
             <p className="lead">
               <button type="button" className="btn btn-secondary">Connect your Wallet</button>
