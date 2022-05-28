@@ -1,19 +1,38 @@
 const { expect } = require("chai");
+const { stat } = require("fs");
 const { ethers } = require("hardhat");
 
 describe("TheScatter", function () {
-  it("Should return the new greeting once it's changed", async function () {
+  it("Should create a new Story", async function () {
     const TheScatter = await ethers.getContractFactory("TheScatter");
-    const scatter = await TheScatter.deploy("Hello, world!");
+    const scatter = await TheScatter.deploy();
     await scatter.deployed();
+    const ownerAddr = await scatter.owner();
+   
+    const storyOneTx = await scatter.createStory("Story One", "123456");
+    await storyOneTx.wait();
 
-    expect(await scatter.greet()).to.equal("Hello, world!");
+    const story = await scatter.fetchStories(ownerAddr);
 
-    const setGreetingTx = await scatter.setGreeting("Hola, mundo!");
-
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await scatter.greet()).to.equal("Hola, mundo!");
+    expect(story[0].title).to.equal("Story One");
   });
+
+  it("Should update a Story", async function () {
+    const TheScatter = await ethers.getContractFactory("TheScatter");
+    const scatter = await TheScatter.deploy();
+    await scatter.deployed();
+    const ownerAddr = await scatter.owner();
+
+    const storyOneTx = await scatter.createStory("Story One", "123456");
+    await storyOneTx.wait();
+
+    const updatedStory = await scatter.updateStory(1, "Story One Point Two", "78912", true);
+    await updatedStory.wait();
+
+    const story = await scatter.fetchStory(ownerAddr, 1);
+
+    expect(story.title).to.equal("Story One Point Two");
+  });
+
+
 });

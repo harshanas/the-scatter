@@ -25,10 +25,10 @@ contract TheScatter {
     mapping(uint => Story) private idToStory;
     mapping(string => Story) private hashToStory;
     mapping(uint => address) private storyIdToWalletAddr;
-    mapping(address => Story[]) private walletAddrToStory;
+    mapping(address => uint[]) private walletAddrToStoryId;
 
     event PostCreated(uint id, string title, string hash);
-    event PostUpdated(uint id, string title, string hash, bool published);
+    event PostUpdated(uint id, string title, string hash, bool isPublished);
 
     function createStory(string memory title, string memory hash) public {
         _storyIds.increment();
@@ -43,15 +43,14 @@ contract TheScatter {
         hashToStory[hash] = story;
         
         storyIdToWalletAddr[storyId] = msg.sender;
-        uint currentStoryCountByAuthor = walletAddrToStory[msg.sender].length;
-        walletAddrToStory[msg.sender][currentStoryCountByAuthor+1] = story;
+        walletAddrToStoryId[msg.sender].push(storyId);
 
         emit PostCreated(storyId, title, hash);
     }
 
     function updateStory(uint storyId, string memory title, string memory hash, bool isPublished) public  {
-        address authorId = storyIdToWalletAddr[storyId];
-        require(msg.sender == authorId, "Only the author can edit their story");
+        address walletAddr = storyIdToWalletAddr[storyId];
+        require(msg.sender == walletAddr, "Only the author can edit their story");
 
         Story storage story =  idToStory[storyId];
         story.title = title;
@@ -63,14 +62,14 @@ contract TheScatter {
         emit PostUpdated(story.id, title, hash, isPublished);
     }
 
-    function fetchStories(address authorId) public view returns (Story[] memory) {
-        uint storyCountByAuthor = walletAddrToStory[authorId].length;
+    function fetchStories(address walletAddr) public view returns (Story[] memory) {
+        uint storyCountByAuthor = walletAddrToStoryId[walletAddr].length;
 
         Story[] memory stories = new Story[](storyCountByAuthor);
-        for (uint currentStoryId = 0; currentStoryId < storyCountByAuthor; currentStoryId++) {
+        for (uint currentIndex = 0; currentIndex < storyCountByAuthor; currentIndex++) {
 
-            Story storage currentItem = walletAddrToStory[authorId][currentStoryId];
-            stories[currentStoryId] = currentItem;
+            Story storage currentItem = idToStory[walletAddrToStoryId[walletAddr][currentIndex]];
+            stories[currentIndex] = currentItem;
         }
         return stories;
     }
