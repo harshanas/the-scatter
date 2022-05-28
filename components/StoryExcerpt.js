@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import styles from "../assets/styles/components/storyexcerpt.module.css";
 
-export default function StoryExcerpt({ post }) {  
+export default function StoryExcerpt({ story }) {  
     
     return (
         <react.Fragment>
@@ -11,14 +11,14 @@ export default function StoryExcerpt({ post }) {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="card-body">
-                            <Link href={`/${post.authorId}/stories/${post.id}`}>
+                            <Link href={`/${story.authorId}/stories/${story.id}`}>
                                 <a>
-                                    <h5 className={styles['card-title']}>{ post.title }</h5>
+                                    <h5 className={styles['card-title']}>{ story.title }</h5>
                                 </a>
                             </Link>
-                            <p class="text-muted">Published by {post.authorId} on {post.date}</p>
+                            <p class="text-muted">Published by {story.authorId} on {story.timestamp}</p>
                             <p className="card-text">
-                                { post.content }
+                                { story.content }
                             </p>
                             </div>
                     </div>
