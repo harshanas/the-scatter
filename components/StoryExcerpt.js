@@ -4,7 +4,6 @@ import Link from 'next/link';
 import styles from "../assets/styles/components/storyexcerpt.module.css";
 
 export default function StoryExcerpt({ story, authorId }) {  
-
     return (
         <react.Fragment>
             <div className={`card ${styles['news-story-excerpt-card']} mt-2`}>
@@ -19,7 +18,7 @@ export default function StoryExcerpt({ story, authorId }) {
                             <p className="text-muted mb-0">Published by {authorId}</p>
                             <span className="text-muted">on {story.timestamp}</span>
                             <p className="card-text">
-                                { story.content }
+                                { story.content.slice(0, 100) }...
                             </p>
                             </div>
                     </div>

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import react from 'react'
 
 export default function Story({ story }) {
+  console.log(story)
   return (
     <react.Fragment>
         <h1>
