@@ -1,11 +1,14 @@
-import react from 'react';
+import react, { useContext } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import MainLayout from '../../layouts/mainLayout'
 import StoryExcerpt from '../../components/StoryExcerpt';
+import { AccountContext }  from "../../lib/context";
 
-export default function AuthorProfile () {
+export default function StoryList () {
+  const { walletAddr, setWalletAddr } = useContext(AccountContext);
+
   const router = useRouter()
   const { authorId } = router.query
   
@@ -46,14 +49,14 @@ export default function AuthorProfile () {
               return <StoryExcerpt story={story} key={index} />
             }) :
             (
-              <div class="card text-center mt-5">
-                <div class="card-body">
-                  <h3 class="card-title mb-2">There are no stories <br/> :( </h3>
-                  {/* <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> */}
-                  {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                  <Link href={`/${authorId}/stories/new`}>
+              <div className="card text-center mt-5">
+                <div className="card-body">
+                  <h3 className="card-title mb-2">There are no stories <br/> :( </h3>
+                  {/* <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6> */}
+                  {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
+                  <Link href={`/${walletAddr}/stories/new`}>
                     
-                    <button type="button" class="btn btn-secondary mt-2">Write your first story</button>
+                    <button type="button" className="btn btn-secondary mt-2">Write your first story</button>
 
                   </Link>
                 </div>
@@ -68,7 +71,7 @@ export default function AuthorProfile () {
   );
 }
 
-AuthorProfile.getLayout = function getLayout(page) {
+StoryList.getLayout = function getLayout(page) {
   return (
     <MainLayout>
       {page}

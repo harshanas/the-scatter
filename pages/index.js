@@ -1,9 +1,15 @@
-import react from 'react';
+import react, { useContext } from 'react';
+import Link from 'next/link'
 import Head from 'next/head';
+
+import AccountConnection from '../components/AccountConnection'
+import MainLayout from '../layouts/mainLayout'
+import { AccountContext }  from "../lib/context";
 
 import styles from '../assets/styles/Home.module.css'
 
 export default function Home() {
+  const { walletAddr, setWalletAddr } = useContext(AccountContext);
 
   return (
     <react.Fragment>
@@ -30,7 +36,18 @@ export default function Home() {
               The Scatter is a blogging platform created inside the Polygon network.<br/>You can connect your wallet and publish posts.<br/>Happy Writing :) 
             </p>
             <p className="lead">
-              <button type="button" className="btn btn-secondary">Connect your Wallet</button>
+              {
+                walletAddr ? (
+                  <Link href={`/${walletAddr}/stories/`}>
+                    <button type="button" className="btn btn-secondary">
+                        Go to Dashboard
+                    </button>
+                  </Link>
+                ) : (
+                  <AccountConnection redirPath="home" />
+                )
+              }
+              
             </p>
           </main>
 
@@ -41,5 +58,13 @@ export default function Home() {
       </main>
 
     </react.Fragment>
+  )
+}
+
+Home.getLayout = function getLayout(page) {
+  return (
+    <MainLayout>
+      {page}
+    </MainLayout>
   )
 }
