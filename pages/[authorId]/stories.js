@@ -1,52 +1,33 @@
 import react, { useContext } from 'react';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { ethers } from 'ethers'
 
 import MainLayout from '../../layouts/mainLayout'
 import StoryExcerpt from '../../components/StoryExcerpt';
 import { AccountContext }  from "../../lib/context";
+import { contractAddress } from '../../config';
+import Scatter from "../../artifacts/contracts/TheScatter.sol/TheScatter.json"
 
-export default function StoryList () {
+const ipfsURI = 'https://ipfs.io/ipfs/'
+
+export default function StoryList (props) {
   const { walletAddr, setWalletAddr } = useContext(AccountContext);
 
   const router = useRouter()
   const { authorId } = router.query
+  const { stories } = props;
+
+  console.log(stories)
   
-  const stories = [];
-  // const stories = [
-  //   {
-  //     id: "euhe385biv",
-  //     authorId, 
-  //     timestamp: "22nd May 2022",
-  //     title: "Lorem ipsum sit dolar amet",
-  //     content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque perferendis mollitia, aperiam tempora soluta, laudantium dolorum hic odit nostrum, recusandae iure. Aliquid ipsam repudiandae fugit, molestias magni culpa officia eaque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, assumenda reprehenderit cupiditate quod distinctio natus modi temporibus deleniti debitis consequatur excepturi cumque, tempore placeat magnam doloribus totam exercitationem consequuntur aut."
-  //   },
-  //   {
-  //     id: "wgeuh238748",
-  //     authorId, 
-  //     timestamp: "22nd May 2022",
-  //     title: "Lorem ipsum sit dolar amet",
-  //     content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque perferendis mollitia, aperiam tempora soluta, laudantium dolorum hic odit nostrum, recusandae iure. Aliquid ipsam repudiandae fugit, molestias magni culpa officia eaque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, assumenda reprehenderit cupiditate quod distinctio natus modi temporibus deleniti debitis consequatur excepturi cumque, tempore placeat magnam doloribus totam exercitationem consequuntur aut."
-  //   },
-  //   {
-  //     id: "vheh738",
-  //     authorId, 
-  //     timestamp: "22nd May 2022",
-  //     title: "Lorem ipsum sit dolar amet",
-  //     content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque perferendis mollitia, aperiam tempora soluta, laudantium dolorum hic odit nostrum, recusandae iure. Aliquid ipsam repudiandae fugit, molestias magni culpa officia eaque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, assumenda reprehenderit cupiditate quod distinctio natus modi temporibus deleniti debitis consequatur excepturi cumque, tempore placeat magnam doloribus totam exercitationem consequuntur aut."
-  //   }
-  // ];
-
- 
-
   return (
     <react.Fragment>
       <div className='row mt-3'>
         <div className="col-md-6 offset-md-3 col-12 text-justify">
 
-          { stories.length > 0 ?
+          { stories ?
             stories.map((story, index) => {
-              return <StoryExcerpt story={story} key={index} />
+              return <StoryExcerpt story={story} authorId={authorId} key={index} />
             }) :
             (
               <div className="card text-center mt-5">
@@ -77,4 +58,39 @@ StoryList.getLayout = function getLayout(page) {
       {page}
     </MainLayout>
   )
+}
+
+export async function getServerSideProps(context) {
+  let provider;
+  let ipfsUrl;
+  let response;
+  let story;
+  const stories = [];
+
+  const { authorId } = context.query;
+  
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
+
+  const contract = new ethers.Contract(contractAddress, Scatter.abi, provider)
+  const storiesMeta = await contract.fetchStories(authorId);
+
+  for (let storyMeta of storiesMeta){
+    ipfsUrl = `${ipfsURI}/${storyMeta[2]}`
+    response = await fetch(ipfsUrl)
+    story = await response.json();
+    story.id = storyMeta[2];
+    stories.push(story);
+  }
+  
+  return {
+    props: {
+      stories
+    }
+  }
 }
