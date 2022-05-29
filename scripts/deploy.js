@@ -13,8 +13,8 @@ async function main() {
   /* this code writes the contract addresses to a local */
   /* file named config.js that we can use in the app */
   fs.writeFileSync('./config.js', `
-  export const contractAddress = "${blog.address}"
-  export const ownerAddress = "${blog.signer.address}"
+  export const contractAddress = "${scatter.address}"
+  export const ownerAddress = "${scatter.signer.address}"
   `)
 }
 
