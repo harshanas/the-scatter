@@ -27,6 +27,7 @@ const MySwal = withReactContent(Swal)
 
 export default function EditStoryPage () {
   const [story, setStory] = useState(initialState);
+  const [updating, setUpdateStatus] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   const router = useRouter();
@@ -69,6 +70,7 @@ export default function EditStoryPage () {
         title: <p>Something went wrong</p>,
         text: err && err.message ? err.message : ""
       });
+      setUpdateStatus(true);
       return false;
     }
   }
@@ -80,7 +82,7 @@ export default function EditStoryPage () {
 
   async function updateStory(){
     if (!story.title || !story.content) return
-
+    setUpdateStatus(true);
     const hash = await saveStoryMetaToIpfs()
     const isUpdated = await update(hash);
 
@@ -104,7 +106,7 @@ export default function EditStoryPage () {
                   onChange={value => setStory({ ...story, content: value })}
               />
               <div className="d-grid gap-2">
-                <button className="btn btn-secondary" type="button" onClick={updateStory}>Update Story</button>
+                <button className="btn btn-secondary" type="button" onClick={updateStory} disabled={updating}>Update Story</button>
               </div>
           </div>
           

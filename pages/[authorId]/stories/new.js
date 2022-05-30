@@ -27,6 +27,7 @@ const client = create('https://ipfs.infura.io:5001/api/v0')
 export default function NewStoryPage () {
   const { walletAddr, setWalletAddr } = useContext(AccountContext);
   const [story, setStory] = useState(initialState);
+  const [creating, setCreationStatus] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function NewStoryPage () {
 
   async function publishStory() {   
     if (!title || !content) return
+    setCreationStatus(true);
     const hash = await saveStoryMetaToIpfs()
     const isStored = await store(hash);
     if (isStored){
@@ -86,6 +88,7 @@ export default function NewStoryPage () {
           title: <p>Something went wrong</p>,
           text: err && err.message ? err.message : ""
         });
+        setCreationStatus(false);
         return false;
 
       }
@@ -104,7 +107,7 @@ export default function NewStoryPage () {
                   onChange={value => setStory({ ...story, content: value })}
               />
               <div className="d-grid gap-2">
-                <button className="btn btn-secondary" type="button" onClick={publishStory}>Publish Story</button>
+                <button className="btn btn-secondary" type="button" onClick={publishStory} disabled={creating}>Publish Story</button>
               </div>
           </div>
           
