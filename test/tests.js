@@ -67,5 +67,24 @@ describe("TheScatter", function () {
 
   });
 
+  it("Should get the Authors Count and Stories Count", async function () {
+    const TheScatter = await ethers.getContractFactory("TheScatter");
+    const scatter = await TheScatter.deploy();
+    await scatter.deployed();
+    const ownerAddr = await scatter.owner();
+   
+    let story = await scatter.createStory("Story One", "123456");
+    await story.wait();
+
+    story = await scatter.createStory("Story Two", "2421");
+    await story.wait();
+
+    const authorsCount = await scatter.authorsCount();
+    const storiesCount = await scatter.storiesCount();
+
+    expect(authorsCount).to.equal(1);
+    expect(storiesCount).to.equal(2);
+  });
+
 
 });

@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract TheScatter {
     address public owner;
+    uint public authorsCount;
+    uint public storiesCount;
 
     using Counters for Counters.Counter;
     Counters.Counter private _storyIds;
@@ -13,6 +15,8 @@ contract TheScatter {
     constructor() {
         console.log("Deploying The Scatter Contract");
         owner = msg.sender;
+        authorsCount = 0;
+        storiesCount = 0;
     }
 
     struct Story {
@@ -43,6 +47,10 @@ contract TheScatter {
         hashToStory[hash] = story;
         
         storyIdToWalletAddr[storyId] = msg.sender;
+        if (walletAddrToStoryId[msg.sender].length == 0){
+            authorsCount++;
+        }
+        storiesCount++;
         walletAddrToStoryId[msg.sender].push(storyId);
 
         emit PostCreated(storyId, title, hash);
