@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Helvetica Neue Roman';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Helvetica Neue Roman'), url('../fonts/helveticaneue-roman.woff') format('woff');
+}
+
+body{
+    font-family: "Helvetica Neue Roman", Arial, sans-serif !important;
+}
+h1, button{
+    font-weight: 600 !important;
+}

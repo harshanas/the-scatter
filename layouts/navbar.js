@@ -2,9 +2,12 @@ import { useContext } from "react"
 import Head from 'next/head'
 import react from 'react'
 import Link from 'next/link'
+import Image from "next/image"
 
 import AccountConnection from '../components/AccountConnection';
 import { AccountContext }  from "../lib/context";
+
+import scatterLogo from "../public/images/logo.png";
 
 export default function Navbar() {
   const { walletAddr, setWalletAddr } = useContext(AccountContext);
@@ -22,11 +25,11 @@ export default function Navbar() {
           {
             walletAddr ? (
               <Link href={`/${walletAddr}/stories`}>
-                <a className="navbar-brand">The Scatter</a>
+                <a className="navbar-brand img-responsive"><Image src={scatterLogo}/></a>
               </Link>
             ) : (
               <Link href="/">
-                <a className="navbar-brand">The Scatter</a>
+                <a className="navbar-brand img-responsive"><Image src={scatterLogo}/></a>
               </Link>
             )
           }
