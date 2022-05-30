@@ -71,7 +71,6 @@ describe("TheScatter", function () {
     const TheScatter = await ethers.getContractFactory("TheScatter");
     const scatter = await TheScatter.deploy();
     await scatter.deployed();
-    const ownerAddr = await scatter.owner();
    
     let story = await scatter.createStory("Story One", "123456");
     await story.wait();
