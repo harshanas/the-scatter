@@ -31,9 +31,9 @@ StoryByIdPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps(context) {
   const ipfsURI = 'https://ipfs.io/ipfs/'
-  const { authorId, storyId } = context.query;
+  const { authorId, storyHash } = context.query;
 
-  const ipfsUrl = `${ipfsURI}/${storyId}/`
+  const ipfsUrl = `${ipfsURI}/${storyHash}/`
   const response = await fetch(ipfsUrl)
   let story = await response.json();
   story.authorId = authorId;

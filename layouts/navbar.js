@@ -31,8 +31,10 @@ export default function Navbar() {
             )
           }
           
+          <div>
+            <AccountConnection redirPath={null} />
+          </div>
           
-          <AccountConnection redirPath={null} />
           
         </div>
     </nav>

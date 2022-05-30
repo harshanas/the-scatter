@@ -1,16 +1,19 @@
-import react from 'react'
+import react, { useContext } from 'react'
 import Link from 'next/link';
 
+import { AccountContext }  from "../lib/context";
 import styles from "../assets/styles/components/storyexcerpt.module.css";
 
 export default function StoryExcerpt({ story, authorId }) {  
+    const { walletAddr } = useContext(AccountContext);
+    
     return (
         <react.Fragment>
             <div className={`card ${styles['news-story-excerpt-card']} mt-2`}>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="card-body">
-                            <Link href={`/${authorId}/stories/${story.id}`}>
+                            <Link href={`/${authorId}/stories/${story.hash}`}>
                                 <a>
                                     <h5 className={styles['card-title']}>{ story.title }</h5>
                                 </a>
@@ -20,7 +23,15 @@ export default function StoryExcerpt({ story, authorId }) {
                             <p className="card-text">
                                 { story.content.slice(0, 100) }...
                             </p>
-                            </div>
+                            {
+                                walletAddr && authorId.toLowerCase() == walletAddr.toLowerCase() && (
+                                    <Link href={`/${authorId}/stories/${story.hash}/${story.id}/edit`}>
+                                        <button type="button" className="btn btn-outline-secondary btn-sm">Edit Story</button>
+                                    </Link>
+                                ) 
+                            }
+                            
+                        </div>
                     </div>
                 </div>
             </div>

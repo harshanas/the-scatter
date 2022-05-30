@@ -1,5 +1,6 @@
 import react, { useContext } from "react"
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -87,7 +88,12 @@ export default function AccountConnection({ redirPath }) {
         }
         {
             walletAddr && (
-                walletAddr
+              <>
+                <span className="mr-2">{walletAddr} | </span>
+                <Link href={`/${walletAddr}/stories/new`}>
+                  <button type="button" className="btn btn-outline-secondary"><i className="fas fa-edit"></i></button>
+                </Link>
+              </>
             )
         }
     </react.Fragment>

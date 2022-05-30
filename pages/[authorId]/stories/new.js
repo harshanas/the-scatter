@@ -56,8 +56,13 @@ export default function NewStoryPage () {
   async function publishStory() {   
     if (!title || !content) return
     const hash = await saveStoryMetaToIpfs()
-    const isStored = await store(hash)
-    if (isStored) router.push(`/${walletAddr}/stories`)
+    const isStored = await store(hash);
+    if (isStored){
+      MySwal.fire({
+        title: <p>Story Published Successfully</p>,
+      });
+      router.push(`/${authorId}/stories`)
+    }
   }
 
   async function store(hash){
@@ -70,10 +75,7 @@ export default function NewStoryPage () {
         const val = await contract.createStory(story.title, hash)
         await provider.waitForTransaction(val.hash)
         console.log('val: ', val)
-        
-        MySwal.fire({
-          title: <p>Story Published Successfully</p>,
-        });
+  
         return true;
 
       } catch (err) {
