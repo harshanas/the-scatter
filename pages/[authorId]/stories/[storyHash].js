@@ -1,11 +1,15 @@
-import react from 'react';
+import react, { useContext } from 'react';
 import { useRouter } from 'next/router'
 
 import MainLayout from '../../../layouts/mainLayout'
 import Story from '../../../components/Story';
 
+import { AccountContext }  from "../../../lib/context";
+
 export default function StoryByIdPage (props) {
   const router = useRouter();
+  const { walletAddr } = useContext(AccountContext);
+
   const { story } = props;
 
   return (

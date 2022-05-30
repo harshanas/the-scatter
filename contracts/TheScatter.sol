@@ -24,6 +24,8 @@ contract TheScatter {
       string title;
       string content;
       bool isPublished;
+      uint createdAt;
+      uint updatedAt;
     }
 
     mapping(uint => Story) private idToStory;
@@ -43,6 +45,8 @@ contract TheScatter {
         story.title = title;
         story.isPublished = true;
         story.content = hash;
+        story.createdAt = block.timestamp;
+        story.updatedAt = block.timestamp;
 
         hashToStory[hash] = story;
         
@@ -64,6 +68,7 @@ contract TheScatter {
         story.title = title;
         story.isPublished = isPublished;
         story.content = hash;
+        story.updatedAt = block.timestamp;
 
         hashToStory[hash] = story;
 

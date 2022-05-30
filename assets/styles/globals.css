@@ -8,6 +8,12 @@
 body{
     font-family: "Helvetica Neue Roman", Arial, sans-serif !important;
 }
+
 h1, h4, button{
     font-weight: 600 !important;
+}
+
+.story-meta{
+    font-size: 0.8rem;
+    font-weight: 600;
 }

@@ -18,8 +18,10 @@ export default function StoryExcerpt({ story, authorId }) {
                                     <h5 className={styles['card-title']}>{ story.title }</h5>
                                 </a>
                             </Link>
-                            <p className="text-muted mb-0">Published by {authorId}</p>
-                            <span className="text-muted">on {story.timestamp}</span>
+                            <div className={`${styles['story-meta']} mb-3`}>
+                                <p className="text-muted mb-0">Published by {authorId}</p>
+                                <span className="text-muted">on {story.createdAt }</span>
+                            </div>
                             <p className="card-text">
                                 { story.content.slice(0, 100) }...
                             </p>
