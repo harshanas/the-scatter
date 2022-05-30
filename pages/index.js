@@ -11,7 +11,7 @@ import styles from '../assets/styles/Home.module.css'
 import ScatterLogo from "../public/images/logo_home.png"
 
 export default function Home() {
-  const { walletAddr, setWalletAddr } = useContext(AccountContext);
+  const { walletAddr } = useContext(AccountContext);
 
   return (
     <react.Fragment>
