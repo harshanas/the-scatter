@@ -1,12 +1,14 @@
 import react, { useContext } from 'react';
 import Link from 'next/link'
 import Head from 'next/head';
+import Image from 'next/image';
 
 import AccountConnection from '../components/AccountConnection'
 import MainLayout from '../layouts/mainLayout'
 import { AccountContext }  from "../lib/context";
 
 import styles from '../assets/styles/Home.module.css'
+import ScatterLogo from "../public/images/logo_home.png"
 
 export default function Home() {
   const { walletAddr, setWalletAddr } = useContext(AccountContext);
@@ -30,7 +32,7 @@ export default function Home() {
           </header>
 
           <main className="px-1">
-            <h1>The Scatter</h1>
+            <Image className="img-responsive" src={ScatterLogo} />
             <h5 className='text-muted'>The on-chain Blog</h5>
             <p className="lead mb-4">
               The Scatter is a blogging platform created inside the Polygon network.<br/>You can connect your wallet and publish posts.<br/>Happy Writing :) 
