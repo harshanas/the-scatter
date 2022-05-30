@@ -14,7 +14,7 @@ export default function StoryExcerpt({ story, authorId }) {
                     <div className="col-md-12">
                         <div className="card-body">
                             <Link href={`/${authorId}/stories/${story.hash}`}>
-                                <a>
+                                <a className='nav-link'>
                                     <h5 className={styles['card-title']}>{ story.title }</h5>
                                 </a>
                             </Link>
