@@ -76,6 +76,16 @@ export default function Home({ stats }) {
             </div>
           </div>
 
+          <div className="row">
+            <h4>Open for Contribution</h4>
+            <hr/>
+            <div className='col-12'>
+              <a className='nav-link' href="https://github.com/harshanas/the-scatter">
+                <i className='fa-brands fa-github fa-3x'></i>
+              </a>
+            </div>
+          </div>
+
           <footer className="mt-auto text-white-50">
             
           </footer>
