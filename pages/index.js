@@ -68,7 +68,7 @@ export default function Home({ stats }) {
               </div>
             </div>
 
-            <div class="col">
+            <div className="col">
               <div>
                 <h4 className="fw-bold mb-0">{ stats.storiesCount}</h4>
                 <p>Stories</p>
