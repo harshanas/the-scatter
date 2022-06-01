@@ -78,21 +78,46 @@ export class Story extends Entity {
     this.set("postContent", Value.fromString(value));
   }
 
-  get createdAtTimestamp(): BigInt {
+  get author(): Bytes {
+    let value = this.get("author");
+    return value!.toBytes();
+  }
+
+  set author(value: Bytes) {
+    this.set("author", Value.fromBytes(value));
+  }
+
+  get createdAtTimestamp(): BigInt | null {
     let value = this.get("createdAtTimestamp");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set createdAtTimestamp(value: BigInt) {
-    this.set("createdAtTimestamp", Value.fromBigInt(value));
+  set createdAtTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("createdAtTimestamp");
+    } else {
+      this.set("createdAtTimestamp", Value.fromBigInt(<BigInt>value));
+    }
   }
 
-  get updatedAtTimestamp(): BigInt {
+  get updatedAtTimestamp(): BigInt | null {
     let value = this.get("updatedAtTimestamp");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set updatedAtTimestamp(value: BigInt) {
-    this.set("updatedAtTimestamp", Value.fromBigInt(value));
+  set updatedAtTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("updatedAtTimestamp");
+    } else {
+      this.set("updatedAtTimestamp", Value.fromBigInt(<BigInt>value));
+    }
   }
 }

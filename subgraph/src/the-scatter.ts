@@ -9,6 +9,8 @@ export function handlePostCreated(event: PostCreatedEvent): void {
   let story = new Story(event.params.id.toString());
   story.title = event.params.title;
   story.contentHash = event.params.hash;
+  story.isPublished = true;
+  story.author = event.params.author;
   let data = ipfs.cat(event.params.hash);
   if (data) {
     let value = json.fromBytes(data).toObject()

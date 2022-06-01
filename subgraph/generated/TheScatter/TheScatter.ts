@@ -34,6 +34,10 @@ export class PostCreated__Params {
   get hash(): string {
     return this._event.parameters[2].value.toString();
   }
+
+  get author(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
 }
 
 export class PostUpdated extends ethereum.Event {

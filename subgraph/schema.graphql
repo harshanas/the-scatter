@@ -12,6 +12,7 @@ type Story @entity {
   contentHash: String!
   isPublished: Boolean!
   postContent: String!
-  createdAtTimestamp: BigInt!
-  updatedAtTimestamp: BigInt!
+  author: Bytes!
+  createdAtTimestamp: BigInt
+  updatedAtTimestamp: BigInt,
 }

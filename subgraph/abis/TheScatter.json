@@ -20,6 +20,12 @@
         "internalType": "string",
         "name": "hash",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "author",
+        "type": "address"
       }
     ],
     "name": "PostCreated",
