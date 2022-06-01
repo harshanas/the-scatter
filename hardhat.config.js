@@ -11,9 +11,9 @@ module.exports = {
       url: "https://rpc-mumbai.matic.today",
       accounts: [process.env.PRIVATE_KEY]
     },
-    // polygon: {
-    //   url: "https://polygon-rpc.com/",
-    //   accounts: [process.env.PRIVATE_KEY]
-    // }
+    polygon: {
+      url: "https://polygon-rpc.com/",
+      accounts: [process.env.PRIVATE_KEY]
+    }
   }
 };
