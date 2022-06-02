@@ -16,7 +16,14 @@ export default function Navbar() {
     <react.Fragment>
       <Head>
         <title>The Scatter - The on-chain blog</title>
-        <meta name="description" content="The on-chain blog" />
+        <meta name="description" content="The Scatter is an on-chain blogging platform" />
+        <meta name="keywords" content="thescatter, onchain, on-chain, on chain, blog, the scatter, thescatter.org"/>
+        
+        <meta name="og:title" content="The Scatter - The on-chain blog"/>
+        <meta name="og:url" content="https://thescatter.org"/>
+        {/* <meta name="og:image" content=""/> */}
+        <meta name="og:site_name" content="The Scatter - The on-chain blog"/>
+        <meta name="og:description" content="The Scatter is an on-chain blogging platform"/>
       </Head>
 
     {/* begin::Navbar */}
