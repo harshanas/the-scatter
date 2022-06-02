@@ -37,7 +37,6 @@ export default function Home() {
             const uniqueAuthors = authors.filter((author, index, arr) => 
               arr.indexOf(author) == index
             );
-            console.log(uniqueAuthors)
             setStoriesCount(stories.length);
             setAuthorsCount(uniqueAuthors.length);
           })
