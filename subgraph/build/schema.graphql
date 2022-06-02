@@ -1,9 +1,16 @@
 type _Schema_
   @fulltext(
-    name: "postSearch"
+    name: "postSearchByContentOrTitle"
     language: en
     algorithm: rank
     include: [{ entity: "Story", fields: [{ name: "title" }, { name: "postContent" }] }]
+  )
+
+  @fulltext(
+    name: "postSearchByContentHash"
+    language: en
+    algorithm: rank
+    include: [{ entity: "Story", fields: [{ name: "contentHash" }] }]
   )
 
 type Story @entity {

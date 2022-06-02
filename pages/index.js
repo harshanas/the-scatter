@@ -1,22 +1,52 @@
-import react, { useContext } from 'react';
+import react, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link'
 import Head from 'next/head';
 import Image from 'next/image';
-import { ethers } from 'ethers'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
 import AccountConnection from '../components/AccountConnection'
 import MainLayout from '../layouts/mainLayout'
-import { contractAddress } from '../config';
 import { AccountContext }  from "../lib/context";
-import { getRpcProvider } from "../lib/common"
-
-import Scatter from "../artifacts/contracts/TheScatter.sol/TheScatter.json"
+import config from "../scatter.config";
 
 import styles from '../assets/styles/Home.module.css'
 import ScatterLogo from "../public/images/logo_home.png"
 
-export default function Home({ stats }) {
+export default function Home() {
   const { walletAddr } = useContext(AccountContext);
+  const [ storiesCount, setStoriesCount ] = useState(0);
+  const [ authorsCount, setAuthorsCount ] = useState(0);
+
+  useEffect(() => {
+    const client = new ApolloClient({
+      uri: config.SUBGRAPH_API,
+      cache: new InMemoryCache(),
+    });
+
+    const tokensQuery = `query {
+        stories{
+          id,
+          author
+        }
+    }`;
+
+    client.query({query: gql(tokensQuery)})
+          .then((queryResult) => {
+            const stories = queryResult.data.stories;
+            const authors = stories.map((story) => story.author);
+            const uniqueAuthors = authors.filter((author, index, arr) => 
+              arr.indexOf(author) == index
+            );
+            console.log(uniqueAuthors)
+            setStoriesCount(stories.length);
+            setAuthorsCount(uniqueAuthors.length);
+          })
+          .catch((err) => {
+            console.log('Error fetching data: ', err)
+          })
+
+    
+  }, [])
 
   return (
     <react.Fragment>
@@ -63,14 +93,14 @@ export default function Home({ stats }) {
             <hr/>
             <div className="col">
               <div>
-                <h4 className="fw-bold mb-0">{ stats.authorsCount} </h4>
+                <h4 className="fw-bold mb-0">{ authorsCount} </h4>
                 <p>Authors</p>
               </div>
             </div>
 
             <div className="col">
               <div>
-                <h4 className="fw-bold mb-0">{ stats.storiesCount}</h4>
+                <h4 className="fw-bold mb-0">{ storiesCount}</h4>
                 <p>Stories</p>
               </div>
             </div>
@@ -102,23 +132,4 @@ Home.getLayout = function getLayout(page) {
       {page}
     </MainLayout>
   )
-}
-
-
-export async function getServerSideProps(context) {
-  let provider = getRpcProvider();
-  let stats = {}
-
-  const contract = new ethers.Contract(contractAddress, Scatter.abi, provider)
-  const authorsCount = await contract.authorsCount();
-  const storiesCount = await contract.storiesCount();
-
-  return {
-    props: {
-      stats:{
-        authorsCount: parseInt(authorsCount._hex, 16),
-        storiesCount: parseInt(storiesCount._hex, 16)
-      }
-    }
-  }
 }

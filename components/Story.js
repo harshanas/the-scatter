@@ -9,11 +9,11 @@ export default function Story({ story }) {
             { story.title }
         </h1>
         <div className="story-meta mb-3">
-            <p className="text-muted mb-0">Published by {story.authorId}</p>
+            <p className="text-muted mb-0">Published by {story.author}</p>
             {/* <span className="text-muted">on {story.createdAt }</span> */}
         </div>
         {/* <Image src={storyImg} className="img-fluid rounded-start" /> */}
-        <ReactMarkdown>{ story.content }</ReactMarkdown>
+        <ReactMarkdown>{ story.postContent }</ReactMarkdown>
     </react.Fragment>
   )
 }
