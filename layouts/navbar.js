@@ -21,7 +21,7 @@ export default function Navbar() {
         
         <meta name="og:title" content="The Scatter - The on-chain blog"/>
         <meta name="og:url" content="https://thescatter.org"/>
-        {/* <meta name="og:image" content=""/> */}
+        <meta name="og:image" content="https://raw.githubusercontent.com/harshanas/the-scatter/assets/resources/scatter.png"/>
         <meta name="og:site_name" content="The Scatter - The on-chain blog"/>
         <meta name="og:description" content="The Scatter is an on-chain blogging platform"/>
       </Head>
