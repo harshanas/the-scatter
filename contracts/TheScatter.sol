@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
@@ -13,7 +13,7 @@ contract TheScatter {
     Counters.Counter private _storyIds;
 
     constructor() {
-        console.log("Deploying The Scatter Contract");
+        console.log("Deploying The Scatter Contract V1.1");
         owner = msg.sender;
         authorsCount = 0;
         storiesCount = 0;
@@ -33,7 +33,7 @@ contract TheScatter {
     mapping(uint => address) private storyIdToWalletAddr;
     mapping(address => uint[]) private walletAddrToStoryId;
 
-    event PostCreated(uint id, string title, string hash);
+    event PostCreated(uint id, string title, string hash, address author);
     event PostUpdated(uint id, string title, string hash, bool isPublished);
 
     function createStory(string memory title, string memory hash) public {
@@ -57,7 +57,7 @@ contract TheScatter {
         storiesCount++;
         walletAddrToStoryId[msg.sender].push(storyId);
 
-        emit PostCreated(storyId, title, hash);
+        emit PostCreated(storyId, title, hash, msg.sender);
     }
 
     function updateStory(uint storyId, string memory title, string memory hash, bool isPublished) public  {

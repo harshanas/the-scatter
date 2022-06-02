@@ -1,0 +1,29 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TheScatter
+    network: matic
+    source:
+      address: "0x949A8c680B945084161D9A14E6753Ffd506b2E98"
+      abi: TheScatter
+      startBlock: 29034802
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Story
+      abis:
+        - name: TheScatter
+          file: TheScatter\abis\TheScatter.json
+      eventHandlers:
+        - event: PostCreated(uint256,string,string,address)
+          handler: handlePostCreated
+        - event: PostUpdated(uint256,string,string,bool)
+          handler: handlePostUpdated
+      file: TheScatter\TheScatter.wasm
+features:
+  - fullTextSearch
+  - ipfsOnEthereumContracts

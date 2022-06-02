@@ -13,17 +13,17 @@ export default function StoryExcerpt({ story, authorId }) {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="card-body">
-                            <Link href={`/${authorId}/stories/${story.hash}`}>
+                            <Link href={`/${authorId}/stories/${story.contentHash}`}>
                                 <a className='nav-link'>
                                     <h5 className={styles['card-title']}>{ story.title }</h5>
                                 </a>
                             </Link>
                             <div className={`${styles['story-meta']} mb-3`}>
                                 <p className="text-muted mb-0">Published by {authorId}</p>
-                                <span className="text-muted">on {story.createdAt }</span>
+                                <span className="text-muted">on {story.createdAtTimestamp }</span>
                             </div>
                             <p className="card-text">
-                                { story.content.slice(0, 100) }...
+                                { story.postContent.slice(0, 100) }...
                             </p>
                             {
                                 walletAddr && authorId.toLowerCase() == walletAddr.toLowerCase() && (
